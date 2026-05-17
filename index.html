@@ -38,14 +38,10 @@ input {
 }
 
 /* 🧩 欄位彈性 */
-.name {
-  flex: 2;
-  min-width: 140px;
-}
-
+.name,
 .spec {
-  flex: 1.2;
-  min-width: 90px;
+  flex: 1;
+  min-width: 110px;
 }
 
 .price,
@@ -151,12 +147,9 @@ button {
     gap: 6px;
   }
 
-  .name {
-    flex: 1 1 120px;
-  }
-
+  .name,
   .spec {
-    flex: 1 1 80px;
+    flex: 1 1 100px;
   }
 
   .price,
@@ -205,10 +198,13 @@ button {
 <script>
 
 const STORAGE_KEY = "price_history_v17";
+
 let history = loadHistory();
 
 /* 初始化 */
-for (let i = 0; i < 3; i++) addRow();
+for (let i = 0; i < 3; i++) {
+  addRow();
+}
 
 renderHistory();
 
@@ -245,9 +241,13 @@ function updateAll() {
 
   rows.forEach(r => {
 
-    let price = parseFloat(r.querySelector(".price").value);
+    let price = parseFloat(
+      r.querySelector(".price").value
+    );
 
-    let qty = parseFloat(r.querySelector(".qty").value);
+    let qty = parseFloat(
+      r.querySelector(".qty").value
+    );
 
     let res = r.querySelector(".result");
 
@@ -267,12 +267,14 @@ function updateAll() {
 
   });
 
-  rows.forEach(r =>
-    r.querySelector(".result").classList.remove("best")
-  );
+  rows.forEach(r => {
+    r.querySelector(".result")
+      .classList.remove("best");
+  });
 
   if (minRow) {
-    minRow.querySelector(".result").classList.add("best");
+    minRow.querySelector(".result")
+      .classList.add("best");
   }
 }
 
@@ -281,15 +283,23 @@ function saveRow(btn) {
 
   let r = btn.parentElement;
 
-  let name = r.querySelector(".name").value.trim();
+  let name = r.querySelector(".name")
+    .value.trim();
 
-  let spec = r.querySelector(".spec").value.trim();
+  let spec = r.querySelector(".spec")
+    .value.trim();
 
-  let price = parseFloat(r.querySelector(".price").value);
+  let price = parseFloat(
+    r.querySelector(".price").value
+  );
 
-  let qty = parseFloat(r.querySelector(".qty").value);
+  let qty = parseFloat(
+    r.querySelector(".qty").value
+  );
 
-  if (!price || !qty || price <= 0 || qty <= 0) return;
+  if (!price || !qty || price <= 0 || qty <= 0) {
+    return;
+  }
 
   let unit = price / qty;
 
@@ -348,7 +358,7 @@ function renderHistory() {
   `).join("");
 }
 
-/* 🗑 刪除單筆 */
+/* 🗑 單筆刪除 */
 function deleteOne(id) {
 
   history = history.filter(h => h.id !== id);
@@ -361,7 +371,9 @@ function deleteOne(id) {
 /* 🗑 清除全部 */
 function clearHistory() {
 
-  if (!confirm("確定清除全部？")) return;
+  if (!confirm("確定清除全部？")) {
+    return;
+  }
 
   history = [];
 
@@ -372,6 +384,7 @@ function clearHistory() {
 
 /* 💾 存 */
 function saveHistory() {
+
   localStorage.setItem(
     STORAGE_KEY,
     JSON.stringify(history)
@@ -380,6 +393,7 @@ function saveHistory() {
 
 /* 📥 讀 */
 function loadHistory() {
+
   return JSON.parse(
     localStorage.getItem(STORAGE_KEY) || "[]"
   );
