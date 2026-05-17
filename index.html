@@ -20,7 +20,7 @@ h2 {
 /* 🧮 比價 */
 .row {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ddd;
@@ -37,39 +37,36 @@ input {
   box-sizing: border-box;
 }
 
-/* 🧩 欄位彈性 */
+/* 🧩 商品 / 規格再縮 */
 .name,
 .spec {
   flex: 1;
-  min-width: 90px;
+  min-width: 70px;
 }
 
+/* 小欄位 */
 .price,
 .qty {
-  width: 72px;
+  width: 58px;
   flex-shrink: 0;
 }
 
 /* 結果 */
 .result {
-  min-width: 70px;
+  min-width: 50px;
   text-align: right;
   font-weight: 600;
-  margin-left: auto;
+  flex-shrink: 0;
 }
 
+/* 最便宜 */
 .best {
   background: #fff59d;
 }
 
-/* 🔘 工具列 */
-.toolbar {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
+/* 🔘 按鈕 */
 button {
-  padding: 6px 10px;
+  padding: 6px 8px;
   cursor: pointer;
   border: 1px solid #ccc;
   background: #f5f5f5;
@@ -79,6 +76,11 @@ button {
 
 .save-btn {
   background: #e3f2fd;
+}
+
+.toolbar {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* 🔎 搜尋 */
@@ -136,7 +138,7 @@ button {
   border-color: #e57373;
 }
 
-/* 📱 手機微調 */
+/* 📱 手機 */
 @media (max-width: 600px) {
 
   body {
@@ -144,22 +146,26 @@ button {
   }
 
   .row {
-    gap: 6px;
+    gap: 4px;
   }
 
   .name,
   .spec {
-    flex: 1 1 80px;
+    min-width: 58px;
   }
 
   .price,
   .qty {
-    width: 64px;
+    width: 52px;
   }
 
   .result {
-    min-width: auto;
-    margin-left: 0;
+    min-width: 42px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 6px;
   }
 
   .card {
