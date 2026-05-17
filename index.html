@@ -2,6 +2,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<!-- ✅ 1. 手機關鍵修正 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PriceCheck v18.2</title>
 
 <style>
@@ -22,10 +26,12 @@ h2 { margin-bottom: 12px; }
   border: 1px solid #ddd;
   border-radius: 8px;
   align-items: center;
+  flex-wrap: wrap; /* ✅ 防爆 */
 }
 
 input {
-  width: 110px;
+  width: 100%;
+  max-width: 160px; /* ✅ 不再固定死 */
   padding: 6px;
 }
 
@@ -40,7 +46,7 @@ input {
   background: #fff59d;
 }
 
-/* 🔘 工具列（只保留新增） */
+/* 🔘 工具列 */
 .toolbar {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -113,6 +119,38 @@ button {
   background: #ffebee;
   border-color: #e57373;
 }
+
+/* 📱 ===== 手機優化 ===== */
+@media (max-width: 600px) {
+
+  body {
+    padding: 10px;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  input {
+    max-width: 100%;
+  }
+
+  .result {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
 </style>
 </head>
 
@@ -122,18 +160,15 @@ button {
 
 <div id="list"></div>
 
-<!-- 🔘 工具列（只剩新增） -->
 <div class="toolbar">
   <button onclick="addRow()">＋新增比價</button>
 </div>
 
-<!-- 🔎 搜尋 -->
 <div class="search-box">
   🔎
   <input id="searchInput" placeholder="搜尋商品 / 規格..." oninput="renderHistory()">
 </div>
 
-<!-- 📦 歷史 -->
 <div class="history">
 
   <div class="history-header">
@@ -261,14 +296,12 @@ function renderHistory() {
   `).join("");
 }
 
-/* 🗑 單筆刪除 */
 function deleteOne(id) {
   history = history.filter(h => h.id !== id);
   saveHistory();
   renderHistory();
 }
 
-/* 🗑 全部清除 */
 function clearHistory() {
   if (!confirm("確定清除全部？")) return;
   history = [];
@@ -276,12 +309,10 @@ function clearHistory() {
   renderHistory();
 }
 
-/* 💾 存 */
 function saveHistory() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
 }
 
-/* 📥 讀 */
 function loadHistory() {
   return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 }
